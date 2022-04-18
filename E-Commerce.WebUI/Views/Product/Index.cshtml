@@ -1,0 +1,54 @@
+﻿@model E_Commerce.WebUI.Models.ProductListViewModel
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <form asp-controller="Product">
+
+        <button asp asp-action="AToZSort" type="submit" style="width:100px;height:50px">A to Z</button>
+        <button asp-action="ZToASort" type="submit" style="width:100px;height:50px">Z to A</button>
+    </form>
+
+    <table class="table">
+        <tr>
+            <td>
+                Product Name
+            </td>
+            <td>
+                Unit Price
+            </td>
+            <td>
+                Unit In Stock
+            </td>
+            <td>
+            </td>
+        </tr>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.UnitsInStock</td>
+                <td>
+                    <a class="btn btn-xs btn-success" asp-controller="Cart"
+                       asp-action="AddToCart" asp-route-productId="@item.ProductId">
+                        AddToCart
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+    @await Component.InvokeAsync("PageList")
+</div>
+
+    <product-list-pager  current-category="@Model.CurrentCategory"
+    current-page="@Model.CurrentPage"
+    page-count="@Model.PageCount"
+    page-size="@Model.PageSize"
+    >
+
+</product-list-pager>
